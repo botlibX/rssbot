@@ -24,8 +24,6 @@
 | You can copy/paste the service file and run it under systemd for
 | 24/7 presence in a IRC channel.
 |
-| RSSBOT is Public Domain.
-|
 
 **SYNOPSIS**
 
