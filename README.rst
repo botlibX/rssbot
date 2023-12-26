@@ -14,6 +14,7 @@
 
 |
 | RSSBOT is a python3 bot able to display rss feeds in your channel.
+|
 | It provides all the tools to program a bot, such as disk perisistence
 | for configuration files, event handler to handle the client/server
 | connection, code to introspect modules for commands, deferred
