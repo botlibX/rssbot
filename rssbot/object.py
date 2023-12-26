@@ -7,8 +7,6 @@
 
 
 import json
-import os
-import pathlib
 
 
 def __dir__():
@@ -51,9 +49,6 @@ class Object:
         return str(self.__dict__)
 
 
-"decoder"
-
-
 class ObjectDecoder(json.JSONDecoder):
 
     def decode(self, s, _w=None):
@@ -85,9 +80,6 @@ def loads(string, *args, **kw) -> Object:
     kw["cls"] = ObjectDecoder
     kw["object_hook"] = hook
     return json.loads(string, *args, **kw)
-
-
-"encoder"
 
 
 class ObjectEncoder(json.JSONEncoder):
@@ -134,22 +126,6 @@ def dump(*args, **kw) -> None:
 def dumps(*args, **kw) -> str:
     kw["cls"] = ObjectEncoder
     return json.dumps(*args, **kw)
-
-
-"utilities"
-
-
-def cdir(pth) -> None:
-    pth = pathlib.Path(pth)
-    os.makedirs(pth, exist_ok=True)
-
-
-def spl(txt) -> []:
-    try:
-        res = txt.split(',')
-    except (TypeError, ValueError):
-        res = txt
-    return [x for x in res if x]
 
 
 "methods"
@@ -241,4 +217,3 @@ def update(obj, data, empty=True) -> None:
 
 def values(obj) -> []:
     return obj.__dict__.values()
-

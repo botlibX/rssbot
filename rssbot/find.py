@@ -7,9 +7,9 @@
 
 
 from .default import Default
-from .object  import fqn, items, spl, update
+from .object  import fqn, items, update
 from .storage import Storage, ident, read
-from .utility import fntime
+from .utility import fntime, spl
 
 
 def __dir__():

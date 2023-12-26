@@ -11,10 +11,10 @@ import inspect
 
 from .command import Command
 from .event   import Event
-from .object  import Object, spl
+from .object  import Object
 from .storage import Storage
 from .thread  import launch
-
+from .utility import spl
 
 def __dir__():
     return (

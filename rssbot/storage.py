@@ -11,8 +11,8 @@ import os
 import _thread
 
 
-from .object  import Object, cdir, dump, fqn, load, update
-from .utility import strip
+from .object  import Object, dump, fqn, load, update
+from .utility import cdir, strip
 
 
 def __dir__():

@@ -30,8 +30,8 @@
 **SYNOPSIS**
 
 |
-| rssbot <cmd> [key=val] [key==val]
-| rssbot [-c] [-d] [-v] 
+| rssbot <cmd> [key=val]
+| rssbot [-c] [-v] 
 | rssbotd
 |
 
@@ -114,8 +114,6 @@ here is a list of the commands (use rssbot <cmd>)
 | pwd - sasl nickserv name/pass
 | rem - removes a rss feed
 | rss - add a feed
-| sts - show status
-| thr - show the running threads
 |
 
 **SYSTEMD**
@@ -139,6 +137,7 @@ replace "<user>" with the user running pipx
 |
 | [Install]
 | WantedBy=multi-user.target
+|
 |
 
 if you don't have a ~/.rssbot directory you need to create it
