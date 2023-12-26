@@ -30,9 +30,9 @@
 **SYNOPSIS**
 
 |
-| rssbot <cmd> [key=val] 
-| rssbot <cmd> [key==val]
+| rssbot <cmd> [key=val] [key==val]
 | rssbot [-c] [-d] [-v] 
+| rssbotd
 |
 
 **INSTALL**
