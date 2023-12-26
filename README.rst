@@ -7,7 +7,7 @@
 **NAME**
 
 |
-| RSSBOT - feed rss into your channel
+| RSSBOT - feed rss into your channel.
 |
 
 **DESCRIPTION**
