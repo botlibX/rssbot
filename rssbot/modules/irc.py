@@ -578,25 +578,6 @@ def cfg(event):
         event.reply('ok')
 
 
-def mre(event):
-    if not event.channel:
-        event.reply('channel is not set.')
-        return
-    bot = byorig(event.orig)
-    if 'cache' not in dir(bot):
-        event.reply('bot is missing cache')
-        return
-    if event.channel not in bot.cache:
-        event.reply(f'no output in {event.channel} cache.')
-        return
-    for _x in range(3):
-        txt = bot.gettxt(event.channel)
-        if txt:
-            bot.say(event.channel, txt)
-    size = bot.size(event.channel)
-    event.reply(f'{size} more in cache')
-
-
 def pwd(event):
     if len(event.args) != 2:
         event.reply('pwd <nick> <password>')

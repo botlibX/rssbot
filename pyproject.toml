@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rssbot"
-description = "feed rss into your channel"
+description = "24/7 feed fetcher"
 version = "508"
 authors = [
     {name = "libbot",email = "libbotx@gmail.com"},

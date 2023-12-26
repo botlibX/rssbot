@@ -4,7 +4,7 @@
 # pylint: disable=C,R,W0201,W0212,W0105,W0613,W0406,E0102
 
 
-"objects"
+"24/7 feed fetcher"
 
 
 import getpass
@@ -18,7 +18,7 @@ from rssbot import cdir, forever, modules, scan
 
 
 Cfg         = Default()
-Cfg.mod     = "cmd,dbg,err,fnd,log,irc,mod,mre,pwd,rss,tdo,thr,tmr,ver"
+Cfg.mod     = "cmd,irc,rss"
 Cfg.name    = "rssbot"
 Cfg.version = "508"
 Cfg.wd      = os.path.expanduser(f"~/.{Cfg.name}")

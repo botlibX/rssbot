@@ -7,7 +7,7 @@
 **NAME**
 
 |
-| RSSBOT - feed rss into your channel.
+| RSSBOT - 24/7 feed fetcher.
 |
 
 **DESCRIPTION**
@@ -23,7 +23,7 @@
 | You can copy/paste the service file and run it under systemd for
 | 24/7 presence in a IRC channel.
 |
-| RSSBOT is a contribution back to society and is Public Domain.
+| RSSBOT is Public Domain.
 |
 
 **SYNOPSIS**
@@ -124,7 +124,7 @@ replace "<user>" with the user running pipx
 
 |
 | [Unit]
-| Description=feed rss into your channel
+| Description=24/7 feed fetcher
 | Requires=network.target
 | After=network.target
 |
@@ -172,4 +172,4 @@ then run this
 **COPYRIGHT**
 
 |
-| RSSBOT is a contribution back to society and is Public Domain.
+| RSSBOT is Public Domain.
