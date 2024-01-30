@@ -164,7 +164,7 @@ then run this
 **AUTHOR**
 
 |
-| Bart Thate <libbotx@gmail.com>
+| Bart Thate <objx@proton.me>
 |
 
 **COPYRIGHT**
