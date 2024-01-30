@@ -8,19 +8,21 @@
 
 
 import getpass
+import inspect
 import os
 import pwd
 import sys
+import time
+import _thread
 
 
-from rssbot import Default, Storage
-from rssbot import cdir, forever, modules, scan
+from rssbot import Command, Default, Object, Storage
+from rssbot import cdir, launch, modules, spl
 
 
 Cfg         = Default()
 Cfg.mod     = "cmd,irc,rss"
 Cfg.name    = "rssbot"
-Cfg.version = "508"
 Cfg.wd      = os.path.expanduser(f"~/.{Cfg.name}")
 Cfg.pidfile = os.path.join(Cfg.wd, f"{Cfg.name}.pid")
 Cfg.user    = getpass.getuser()
@@ -51,10 +53,40 @@ def daemon(pidfile, verbose=False):
         fds.write(str(os.getpid()))
 
 
+def forever():
+    while 1:
+        try:
+            time.sleep(1.0)
+        except (KeyboardInterrupt, EOFError):
+            _thread.interrupt_main()
+
+
 def privileges(username):
     pwnam = pwd.getpwnam(username)
     os.setgid(pwnam.pw_gid)
     os.setuid(pwnam.pw_uid)
+
+
+def scan(pkg, modstr, initer=False, wait=True) -> []:
+    mds = []
+    for modname in spl(modstr):
+        module = getattr(pkg, modname, None)
+        if not module:
+            continue
+        for _key, cmd in inspect.getmembers(module, inspect.isfunction):
+            if 'event' in cmd.__code__.co_varnames:
+                Command.add(cmd)
+        for _key, clz in inspect.getmembers(module, inspect.isclass):
+            if not issubclass(clz, Object):
+                continue
+            Storage.add(clz)
+        if initer and "init" in dir(module):
+            module._thr = launch(module.init, name=f"init {modname}")
+            mds.append(module)
+    if wait and initer:
+        for mod in mds:
+            mod._thr.join()
+    return mds
 
 
 def main():

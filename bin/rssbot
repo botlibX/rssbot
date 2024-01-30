@@ -8,6 +8,7 @@
 
 
 import getpass
+import inspect
 import os
 import readline
 import sys
@@ -15,14 +16,14 @@ import termios
 import time
 
 
-from rssbot import Client, Default, Error, Event, Storage
-from rssbot import cmnd, debug, forever, modules, parse_command, scan
+from rssbot import Broker, Command, Default, Error, Event, Handler, Storage
+from rssbot import Object, debug, modules, parse_command, spl
 
 
 Cfg         = Default()
 Cfg.mod     = "cmd,irc,mre,pwd,rss"
 Cfg.name    = "rssbot"
-Cfg.version = "508"
+Cfg.version = "512"
 Cfg.wd      = os.path.expanduser(f"~/.{Cfg.name}")
 Cfg.pidfile = os.path.join(Cfg.wd, f"{Cfg.name}.pid")
 Cfg.user    = getpass.getuser()
@@ -32,11 +33,24 @@ Error.output = print
 Storage.wd   = Cfg.wd
 
 
-class Console(Client):
+class Client(Handler):
+
+    def __init__(self):
+        Handler.__init__(self)
+        self.register("command", Command.handle)
+        Broker.add(self)
 
     def announce(self, txt):
-        if "v" in Cfg.opts:
-            self.say("", txt)
+        self.raw(txt)
+
+    def say(self, channel, txt):
+        self.raw(txt)
+
+    def raw(self, txt):
+        pass
+
+
+class Console(Client):
 
     def poll(self) -> Event:
         evt = Event()
@@ -48,6 +62,46 @@ class Console(Client):
     def say(self, channel, txt):
         txt = txt.encode('utf-8', 'replace').decode()
         print(txt)
+
+
+def cmnd(txt):
+    clt = Console()
+    evn = Event()
+    evn.orig = object.__repr__(clt)
+    evn.txt = txt
+    Command.handle(evn)
+    evn.wait()
+    return evn
+
+
+def forever():
+    while 1:
+        try:
+            time.sleep(1.0)
+        except (KeyboardInterrupt, EOFError):
+            _thread.interrupt_main()
+
+
+def scan(pkg, modstr, initer=False, wait=True) -> []:
+    mds = []
+    for modname in spl(modstr):
+        module = getattr(pkg, modname, None)
+        if not module:
+            continue
+        for _key, cmd in inspect.getmembers(module, inspect.isfunction):
+            if 'event' in cmd.__code__.co_varnames:
+                Command.add(cmd)
+        for _key, clz in inspect.getmembers(module, inspect.isclass):
+            if not issubclass(clz, Object):
+                continue
+            Storage.add(clz)
+        if initer and "init" in dir(module):
+            module._thr = launch(module.init, name=f"init {modname}")
+            mds.append(module)
+    if wait and initer:
+        for mod in mds:
+            mod._thr.join()
+    return mds
 
 
 def wrap(func) -> None:
