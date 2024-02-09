@@ -5,13 +5,12 @@ requires = [
 ]
 build-backend = "setuptools.build_meta"
 
-
 [project]
 name = "rssbot"
 description = "24/7 feed fetcher"
 version = "520"
 authors = [
-    {name = "Bart Thate",email = "bthate@dds.nl"},
+    { name = "Bart Thate", email = "bthate@dds.nl"},
 ]
 readme = "README.rst"
 license = {text="Public Domain"}
@@ -25,17 +24,21 @@ classifiers = [
 
 [project.scripts]
 rssbot = "rssbot.runtime:wrapped"
-rssbotd = "rssbot.runitme:daemoned"
-
+rssbotd = "rssbot.runtime:wrapped"
 
 [project.urls]
 "home" = "https://pypi.org/project/rssbot"
 "bugs" = "https://github.com/botlibx/rssbot/issues"
 "source" = "https://github.com/botlibx/rssbot"
 
-
+[tool.setuptools]
 packages = [
-    "rssbot",
-    "rssbot.modules"
+   "rssbot",
+   "rssbot.modules"
 ]
-zip-safe=true
+zip-safe = true
+
+[tool.setuptools.data-files]
+"share/doc/rssbot" = [
+    "README.rst",
+]

@@ -3,7 +3,7 @@
 **NAME**
 
 
- RSSBOT - 24/7 feed fetcher
+ | RSSBOT - 24/7 feed fetcher
 
 
 **DESCRIPTION**
@@ -39,7 +39,8 @@ You can copy/paste the service file and run it under systemd for
 
 **USAGE**
 
-default action is doing nothing::
+
+default action is doing nothing.
 
 ::
 
@@ -57,17 +58,15 @@ starting a console requires an option
 
 ::
 
-
     $ rssbot -c
     >
-
 
 to start the rssbot as daemon
 
 ::
 
- $ rssbot -d
- $ 
+    $ rssbot -d
+    $ 
 
 
 add -v if you want to have verbose logging
@@ -105,7 +104,7 @@ a password for sasl
     $ rssbot cfg password=<frompwd>
 
     $ rssbot pwd mynick mypass
-    $ AG15bmljawBteXBhc3M=
+    AG15bmljawBteXBhc3M=
     $ rssbot cfg password=AG15bmljawBteXBhc3M=
 
 rss has several configuration commands
@@ -126,6 +125,8 @@ rss has several configuration commands
 
 
 here is a list of the commands (use rssbot <cmd>)
+
+::
 
     cfg - irc configuration
     cmd - commands

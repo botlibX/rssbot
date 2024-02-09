@@ -112,10 +112,12 @@ def daemon(pidfile, verbose=False):
 
 
 def daemoned():
-    Cfg.mod = ",".join(modules.__dir__())
+    Storage.skel()
+    Cfg.user = getpass.getuser()
     daemon(Cfg.pidfile)
+    Cfg.mod = ",".join(modules.__dir__())
     privileges(Cfg.user)
-    scan(modules, Cfg.mod, True)
+    scan(modules, Cfg.mod, True, wait=False)
     forever()
 
 
