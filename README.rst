@@ -79,6 +79,7 @@ using the ``cfg`` command
 | $ rssbot cfg server=<server>
 | $ rssbot cfg channel=<channel>
 | $ rssbot cfg nick=<nick>
+|
 
 sasl need a nickserv nick/password pair to generate
 a password for sasl
@@ -86,6 +87,7 @@ a password for sasl
 |
 | $ rssbot pwd <nsnick> <nspass>
 | $ rssbot cfg password=<frompwd>
+|
 
 rss has several configuration commands
 
@@ -160,10 +162,11 @@ then run this
 **AUTHOR**
 
 |
-| Bart Thate <objx@proton.me>
+| Bart Thate <bthate@dds.nl>
 |
 
 **COPYRIGHT**
 
 |
 | RSSBOT is Public Domain.
+|
