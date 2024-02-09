@@ -2,23 +2,25 @@
 
 **NAME**
 
+::
 
- | RSSBOT - 24/7 feed fetcher
+    RSSBOT - 24/7 feed fetcher
 
 
 **DESCRIPTION**
 
+::
 
-RSSBOT is a python3 bot able to display rss feeds in your channel.
+    RSSBOT is a python3 bot able to display rss feeds in your channel.
 
-It provides all the tools to program a bot, such as disk perisistence
-for configuration files, event handler to handle the client/server
-connection, code to introspect modules for commands, deferred
-exception handling to not crash on an error, a parser to parse
-commandline options and values, etc.
+    It provides all the tools to program a bot, such as disk perisistence
+    for configuration files, event handler to handle the client/server
+    connection, code to introspect modules for commands, deferred
+    exception handling to not crash on an error, a parser to parse
+    commandline options and values, etc.
 
-You can copy/paste the service file and run it under systemd for
-24/7 presence in a IRC channel.
+    You can copy/paste the service file and run it under systemd for
+    24/7 presence in a IRC channel.
 
 
 **SYNOPSIS**
