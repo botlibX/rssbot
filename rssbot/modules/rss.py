@@ -177,7 +177,7 @@ def gettinyurl(url):
     postdata = urlencode(postarray, quote_via=quote_plus)
     req = urllib.request.Request('http://tinyurl.com/create.php',
                   data=bytes(postdata, 'UTF-8'))
-    req.add_header('User-agent', useragent("rss fetcher"))
+    req.add_header('User-agent', useragent("24/7 rss fetcher"))
     with urllib.request.urlopen(req) as htm: # nosec
         for txt in htm.readlines():
             line = txt.decode('UTF-8').strip()
@@ -192,7 +192,7 @@ def geturl(url):
         return ""
     url = urllib.parse.urlunparse(urllib.parse.urlparse(url))
     req = urllib.request.Request(url)
-    req.add_header('User-agent', useragent("rss fetcher"))
+    req.add_header('User-agent', useragent("24/7 rss fetcher"))
     with urllib.request.urlopen(req) as response: # nosec
         response.data = response.read()
         return response

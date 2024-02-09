@@ -1,13 +1,9 @@
 **R  S  S  B  O  T**
 
-
-!!
-
-
 **NAME**
 
 |
-| RSSBOT - 24/7 feed fetcher.
+| RSSBOT - 24/7 feed fetcher
 |
 
 **DESCRIPTION**
@@ -29,7 +25,7 @@
 
 |
 | rssbot <cmd> [key=val]
-| rssbot [-c] [-v] 
+| rssbot [-c] [-d] [-h] [-v] 
 | rssbotd
 |
 

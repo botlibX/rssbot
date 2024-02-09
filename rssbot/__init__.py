@@ -3,7 +3,7 @@
 # pylint: disable=C,R,W0401,E0402
 
 
-"""feed fetcher
+"""24/7 feed fetcher
 
 
 rssbot <cmd> [key=val] [key==val] [mod=n1,n2]
