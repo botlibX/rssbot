@@ -1,7 +1,6 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C,I,R,W0613,E1101,E0402,W0401,W0105
-# flake8: noqa=E501
+# pylint: disable=C,R,W0613,E0402
 
 
 "genocide model of the netherlands"
@@ -11,8 +10,8 @@ import datetime
 import time
 
 
-from objx import Group, Event, Object, Repeat
-from objx import construct, keys, laps, launch
+from .. import Object, construct, keys
+from .. import Event, Fleet, Repeater, laps, launch
 
 
 def __dir__():
@@ -30,7 +29,7 @@ def init():
             evt.txt = ""
             evt.rest = key
             sec = seconds(val)
-            repeater = Repeat(sec, cbstats, evt, thrname=aliases.get(key))
+            repeater = Repeater(sec, cbstats, evt, thrname=aliases.get(key))
             repeater.start()
     launch(daily, name="daily")
     
@@ -336,7 +335,7 @@ def cbnow(evt):
         nrtimes = int(delta/needed)
         txt += "%s: %s " % (getalias(name), nrtimes)
     txt += " http://genocide.rtfd.io"
-    for bot in Group.objs:
+    for bot in Fleet.objs:
         if "announce" in dir(bot):
             bot.announce(txt)
 
@@ -359,7 +358,7 @@ def cbstats(evt):
                                                                laps(needed),
                                                                nryear,
                                                               )
-        for bot in Broker.objs:
+        for bot in Fleet.objs:
             bot.announce(txt)
 
 

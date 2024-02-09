@@ -6,24 +6,41 @@
 "a clean namespace"
 
 
+import pathlib
 import json
+import os
+import _thread
 
 
 def __dir__():
     return (
+        'Default',
         'Object',
+        'cdir',
         'construct',
         'edit',
         'fmt',
         'fqn',
         'items',
         'keys',
+        'read',
         'update',
         'values',
+        'write'
     )
 
 
 __all__ = __dir__()
+
+
+lock = _thread.allocate_lock()
+
+
+def cdir(pth) -> None:
+    if os.path.exists(pth):
+        return
+    pth = pathlib.Path(pth)
+    os.makedirs(pth, exist_ok=True)
 
 
 class Object:
@@ -38,10 +55,22 @@ class Object:
         return len(self.__dict__)
 
     def __repr__(self):
-        return dumps(self, indent=4)
+        return dumps(self)
 
     def __str__(self):
         return str(self.__dict__)
+
+
+class Default(Object):
+
+    __slots__ = ("__default__",)
+
+    def __init__(self):
+        Object.__init__(self)
+        self.__default__ = ""
+
+    def __getattr__(self, key):
+        return self.__dict__.get(key, self.__default__)
 
 
 class ObjectDecoder(json.JSONDecoder):
@@ -203,6 +232,12 @@ def keys(obj):
     return list(obj.__dict__.keys())
 
 
+def read(obj, pth):
+    with lock:
+        with open(pth, 'r', encoding='utf-8') as ofile:
+            update(obj, load(ofile))
+
+
 def update(obj, data, empty=True):
     for key, value in items(data):
         if empty and not value:
@@ -212,3 +247,10 @@ def update(obj, data, empty=True):
 
 def values(obj):
     return obj.__dict__.values()
+
+
+def write(obj, pth):
+    with lock:
+        cdir(os.path.dirname(pth))
+        with open(pth, 'w', encoding='utf-8') as ofile:
+            dump(obj, ofile)

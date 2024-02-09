@@ -6,7 +6,6 @@
 "internet relay chat"
 
 
-import base64
 import os
 import queue
 import socket
@@ -17,17 +16,17 @@ import time
 import _thread
 
 
-from .. import Broker, Default, Object, edit, fmt, keys
-from .. import Handler, Command, Error, Event
-from .. import debug, last, launch, sync
+from ..configs import Cfg
 
+from .. import Default, Object, edit, fmt, keys
+from .. import Client, Command, Error, Event
+from .. import byorig, debug, last, launch, sync
 
-Error.filter = ["PING", "PONG", "PRIVMSG"]
-byorig = Broker.byorig
 
 NAME = __file__.split(os.sep)[-3]
 
 
+Error.filter = ["PING", "PONG", "PRIVMSG"]
 saylock = _thread.allocate_lock()
 
 
@@ -57,12 +56,12 @@ class Config(Default):
 
     def __init__(self):
         Default.__init__(self)
-        self.channel = self.channel or Config.channel
+        self.channel = Cfg.channel or self.channel or Config.channel
         self.commands = self.commands or Config.commands
-        self.nick = self.nick or Config.nick
+        self.nick = Cfg.nick or self.nick or Config.nick
         self.port = self.port or Config.port
         self.realname = self.realname or Config.realname
-        self.server = self.server or Config.server
+        self.server = Cfg.server or self.server or Config.server
         self.username = self.username or Config.username
 
 
@@ -96,7 +95,8 @@ class Output():
     def extend(channel, txtlist):
         if channel not in Output.cache:
             Output.cache[channel] = []
-        Output.cache[channel].extend(txtlist)
+        chanlist = getattr(Output.cache, channel)
+        chanlist.extend(txtlist)
 
     @staticmethod
     def gettxt(channel):
@@ -142,10 +142,10 @@ class Output():
         return 0
 
 
-class IRC(Handler, Output):
+class IRC(Client, Output):
 
     def __init__(self):
-        Handler.__init__(self)
+        Client.__init__(self)
         Output.__init__(self)
         self.buffer = []
         self.cfg = Config()
@@ -172,7 +172,6 @@ class IRC(Handler, Output):
         self.register('PRIVMSG', cb_privmsg)
         self.register('QUIT', cb_quit)
         self.register("366", cb_ready)
-        Broker.add(self)
 
     def announce(self, txt):
         for channel in self.channels:
@@ -457,11 +456,11 @@ class IRC(Handler, Output):
         self.events.connected.clear()
         self.events.joined.clear()
         launch(Output.out, self)
-        Handler.start(self)
+        Client.start(self)
         launch(
                self.doconnect,
-               self.cfg.server or "localhost",
-               self.cfg.nick,
+               Cfg.server or self.cfg.server or "localhost",
+               Cfg.nick or self.cfg.nick,
                int(self.cfg.port or '6667')
               )
         if not self.state.keeprunning:
@@ -471,7 +470,7 @@ class IRC(Handler, Output):
         self.disconnect()
         self.dostop.set()
         self.oput(None, None)
-        Handler.stop(self)
+        Client.stop(self)
 
     def wait(self):
         self.events.ready.wait()
@@ -577,35 +576,3 @@ def cfg(event):
         edit(config, event.sets)
         sync(config, path)
         event.reply('ok')
-
-
-def mre(event):
-    if not event.channel:
-        event.reply('channel is not set.')
-        return
-    bot = byorig(event.orig)
-    if 'cache' not in dir(bot):
-        event.reply('bot is missing cache')
-        return
-    if event.channel not in bot.cache:
-        event.reply(f'no output in {event.channel} cache.')
-        return
-    for _x in range(3):
-        txt = bot.gettxt(event.channel)
-        if txt:
-            bot.say(event.channel, txt)
-    size = bot.size(event.channel)
-    event.reply(f'{size} more in cache')
-
-
-def pwd(event):
-    if len(event.args) != 2:
-        event.reply('pwd <nick> <password>')
-        return
-    arg1 = event.args[0]
-    arg2 = event.args[1]
-    txt = f'\x00{arg1}\x00{arg2}'
-    enc = txt.encode('ascii')
-    base = base64.b64encode(enc)
-    dcd = base.decode('ascii')
-    event.reply(dcd)

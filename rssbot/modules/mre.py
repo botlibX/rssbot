@@ -1,9 +1,12 @@
 # This file is placed in the Public Domain.
 #
-# pylint: disable=C,R
+# pylint: disable=C,R,E0402
 
 
-from objx import byorig
+"show cached output"
+
+
+from .. import byorig
 
 
 def mre(event):

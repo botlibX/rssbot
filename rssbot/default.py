@@ -3,7 +3,7 @@
 # pylint: disable=C,R
 
 
-"default values"
+"defaults"
 
 
 from .objects import Object
