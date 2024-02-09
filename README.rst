@@ -42,24 +42,28 @@
 |
 | $ rssbot
 | $
+|
 
 first argument is a command
 
 |
 | $ rssbot cmd
 | cfg,cmd,dpl,mre,nme,pwd,rem,rss,ver
+|
 
 starting a console requires an option
 
 |
 | $ rssbot -c
 | >
+|
 
 to start the rssbot as daemon
 
 |
 | $ rssbot -d
 | $ 
+|
 
 add -v if you want to have verbose logging
 
@@ -80,6 +84,10 @@ using the ``cfg`` command
 | $ rssbot cfg channel=<channel>
 | $ rssbot cfg nick=<nick>
 |
+| $ rssbot cfg
+| channel=#rssbot commands=False nick=rssbot port=6667 server=localhost
+| $ rssbot cfg nick=goodname channel=\#goodies
+|
 
 sasl need a nickserv nick/password pair to generate
 a password for sasl
@@ -87,6 +95,10 @@ a password for sasl
 |
 | $ rssbot pwd <nsnick> <nspass>
 | $ rssbot cfg password=<frompwd>
+|
+| $ rssbot pwd feeder mypass
+| $ AGZlZWRlcgBteXBhc3M=
+| $ rssbot cfg password=AGZlZWRlcgBteXBhc3M=
 |
 
 rss has several configuration commands
@@ -97,7 +109,11 @@ rss has several configuration commands
 | $ rssbot rem <url>
 | $ rssbot nme <url> <name>
 |
-
+| $ rssbot rss http://hnrss.org/newest
+| $ rssbot name hackernews hnrss
+| $ rssbot dpl hnrss title,summary,link
+|
+ 
 **COMMANDS**
 
 here is a list of the commands (use rssbot <cmd>)
@@ -107,6 +123,7 @@ here is a list of the commands (use rssbot <cmd>)
 | cmd - commands
 | dpl - sets display items
 | mre - displays cached output
+| nme - set name of feed
 | pwd - sasl nickserv name/pass
 | rem - removes a rss feed
 | rss - add a feed
