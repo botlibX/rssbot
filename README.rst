@@ -185,6 +185,7 @@ then run this
 **FILES**
 
 ::
+
     ~/.rssbot
     ~/.local/bin/rssbot
     ~/.local/bin/rssbotd
