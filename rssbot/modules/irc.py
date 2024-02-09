@@ -40,7 +40,7 @@ def init():
 class Config(Default):
 
     channel = f'#{NAME}'
-    commands = True
+    commands = False
     control = '!'
     edited = time.time()
     nick = NAME

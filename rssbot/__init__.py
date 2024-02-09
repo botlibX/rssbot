@@ -3,30 +3,29 @@
 # pylint: disable=C,R,W0401,E0402
 
 
+"""feed fetcher
 
-"""original programmer (op)
 
-
-op <cmd> [key=val] [key==val] [mod=n1,n2]
-op [-a] [-c] [-d] [-h] [-v] [-w]
+rssbot <cmd> [key=val] [key==val] [mod=n1,n2]
+rssbot [-c] [-d] [-h] [-v]
 
 commands:
 
 cfg - irc configuration
 cmd - commands
+dpl - items of feed to display
 mod - show available modules
-now - show genocide stats
-req - reconsider
-wsd - show wisdom
+mre - show cached output
+pwd - create sasl password
+rem - remove feed
+rss - add feed
 
 options:
 
--a     load all modules
 -c     start console
 -d     start daemon
 -h     display help
--v     use verbose
--w     wait for services"""
+-v     use verbose"""
 
 
 from .defines import *

@@ -142,13 +142,11 @@ def wrap(func):
 
 def main():
     parse_cmd(Cfg, " ".join(sys.argv[1:]))
-    Cfg.mod = "cmd,mod"
+    Cfg.mod = "irc,rss"
     Cfg.user = getpass.getuser()
     Storage.skel()
     update(Cfg, Cfg.sets)
     enable(print)
-    if "a" in Cfg.opts:
-        Cfg.mod = ",".join(modules.__dir__())
     if "v" in Cfg.opts:
         dte = time.ctime(time.time()).replace("  ", " ")
         debug(f"{Cfg.name.upper()} {Cfg.opts.upper()} started {dte}")
@@ -161,6 +159,7 @@ def main():
         print(txt)
         return
     if "c" in Cfg.opts:
+        Cfg.mod = ",".join(modules.__dir__())
         scan(modules, Cfg.mod, Cfg.mod, Cfg.sets.dis, True)
         csl.start()
         forever()
